@@ -1,0 +1,345 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CKD Prediction System</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            background: #EAF4FC;
+            color: #263746;
+            min-height: 100vh;
+            padding: 30px 15px;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: auto;
+            background: #FFFFFF;
+            border-radius: 16px;
+            box-shadow: 0 6px 25px rgba(21, 94, 154, 0.12);
+            overflow: hidden;
+        }
+
+        /* Header */
+
+        .header {
+            background: linear-gradient(135deg, #1976B9, #104C83);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .header h1 {
+            font-size: 29px;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .header p {
+            font-size: 14px;
+            color: #DCEEFF;
+        }
+
+        /* Form Section */
+
+        .form-container {
+            padding: 35px;
+        }
+
+        .section-title {
+            color: #155E9A;
+            font-size: 21px;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: #718398;
+            font-size: 13px;
+            margin-bottom: 28px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 23px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 9px;
+            color: #34495E;
+        }
+
+        input {
+            padding: 13px;
+            border: 1px solid #CADCEB;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            background: #F8FBFE;
+            transition: 0.3s;
+            width: 100%;
+        }
+
+        input:focus {
+            border-color: #1976B9;
+            background: #FFFFFF;
+            box-shadow: 0 0 6px rgba(25, 118, 185, 0.2);
+        }
+
+        input::placeholder {
+            color: #A0B2C3;
+        }
+
+        /* Buttons */
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 35px;
+        }
+
+        button {
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .predict-btn {
+            flex: 2;
+            background: #155E9A;
+            color: white;
+        }
+
+        .predict-btn:hover {
+            background: #104C83;
+            transform: translateY(-2px);
+        }
+
+        .reset-btn {
+            flex: 1;
+            background: #E3EFF9;
+            color: #155E9A;
+        }
+
+        .reset-btn:hover {
+            background: #D1E4F5;
+        }
+
+        /* Disclaimer */
+
+        .notice {
+            background: #F0F7FD;
+            border-left: 4px solid #1976B9;
+            padding: 15px;
+            margin-top: 28px;
+            border-radius: 5px;
+            font-size: 12px;
+            color: #526B82;
+            line-height: 1.7;
+        }
+
+        /* Footer */
+
+        .footer {
+            text-align: center;
+            padding: 19px;
+            background: #F3F8FC;
+            color: #718398;
+            font-size: 12px;
+            border-top: 1px solid #E1ECF5;
+        }
+
+        /* Responsive Design */
+
+        @media (max-width: 600px) {
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-container {
+                padding: 22px;
+            }
+
+            .header h1 {
+                font-size: 23px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+
+    <div class="header">
+
+        <h1>🩺 CKD Prediction System</h1>
+
+        <p>
+            Chronic Kidney Disease Classification
+            Using Machine Learning
+        </p>
+
+    </div>
+
+    <!-- Patient Form -->
+
+    <div class="form-container">
+
+        <h3 class="section-title">
+            Patient Clinical Information
+        </h3>
+
+        <p class="description">
+            Please enter the patient's clinical measurements
+            to generate a CKD prediction.
+        </p>
+
+        <form action="/predict" method="POST">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Age (Years)</label>
+                    <input type="number" step="any"
+                        name="Age_input"
+                        placeholder="Enter age"
+                        min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Albumin(1 to 5)</label>
+                    <input type="number" step="any"
+                        name="al_input"
+                        placeholder="Enter albumin level"
+                        min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Blood Glucose Random(70 to 450) (mg/dL)</label>
+                    <input type="number" step="any"
+                        name="bgr_input"
+                        placeholder="Enter blood glucose"
+                        min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Blood Urea(18 to 230) (mg/dL)</label>
+                    <input type="number" step="any"
+                        name="bu_input"
+                        placeholder="Enter blood urea"
+                        min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Serum Creatinine(1.2 to 48.1) (mg/dL)</label>
+                    <input type="number" step="any"
+                        name="sc_input"
+                        placeholder="Enter serum creatinine"
+                        min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Haemoglobin(4.8 to 15.5) (g/dL)</label>
+                    <input type="number" step="any"
+                        name="hemo_input"
+                        placeholder="Enter haemoglobin"
+                        min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Packed Cell Volume(17 to 44) (%)</label>
+                    <input type="number" step="any"
+                        name="pcv_input"
+                        placeholder="Enter packed cell volume"
+                        min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label>White Blood Cell Count(5000 to 21800) (cells/cumm)</label>
+                    <input type="number" step="any"
+                        name="wc_input"
+                        placeholder="Enter WBC count"
+                        min="0" required>
+                </div>
+
+            </div>
+
+            <!-- Action Buttons -->
+
+            <div class="button-group">
+
+                <button type="submit" class="predict-btn">
+                    🩺 Predict CKD
+                </button>
+
+                <button type="reset" class="reset-btn">
+                    Clear All
+                </button>
+
+            </div>
+
+        </form>
+
+        <!-- Medical Disclaimer -->
+
+        <div class="notice">
+
+            <strong>Medical Disclaimer:</strong>
+            This application is developed for educational
+            and machine learning demonstration purposes.
+            Predictions should not be considered a medical
+            diagnosis or a substitute for professional
+            medical consultation.
+
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+
+    <div class="footer">
+
+        CKD Prediction System | Machine Learning Project
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
